@@ -1,0 +1,10 @@
+<headers>
+    <header name="X-XSS-Protection"/>
+    <header name="Strict-Transport-Security"/>
+    <header name="X-Frame-Options"/>
+    <header name="X-Content-Type-Options"/>
+    <header name="Content-Security-Policy"/>
+    <header name="Public-Key-Pins"/>
+    <header name="X-Csrf-Token"/>
+    <header name="X-Xsrf-Token"/>
+</headers>
