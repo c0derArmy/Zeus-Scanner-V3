@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  zeus-scanner:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: zeus-scanner:latest
+    container_name: zeus-scanner
+    volumes:
+      # Mount log directory to persist scan results
+      - ./log:/app/log
+      # Mount custom wordlists/payloads (optional)
+      - ./custom-payloads:/app/custom-payloads:ro
+    environment:
+      # Display configuration for headless browsers
+      - DISPLAY=:99
+      - PYTHONUNBUFFERED=1
+    # Network configuration
+    network_mode: host
+    # Security options
+    cap_add:
+      - NET_RAW  # Required for nmap
+    # Resource limits
+    mem_limit: 2g
+    cpus: 2.0
+    # Restart policy
+    restart: unless-stopped
+    
+  # Optional: SQLMap API service
+  sqlmap-api:
+    image: python:3.11-slim
+    container_name: sqlmap-api
+    command: >
+      sh -c "
+        apt-get update && 
+        apt-get install -y git &&
+        git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git /sqlmap &&
+        cd /sqlmap &&
+        python sqlmapapi.py -s -H 0.0.0.0 -p 8775
+      "
+    ports:
+      - "8775:8775"
+    volumes:
+      - sqlmap-data:/sqlmap
+    restart: unless-stopped
+    mem_limit: 1g
+
+volumes:
+  sqlmap-data:
+    driver: local
+
+# Usage examples:
+# 
+# Build and run:
+#   docker-compose build
+#   docker-compose up -d
+#
+# Run Zeus Scanner:
+#   docker-compose run zeus-scanner -d "inurl:admin" -s --batch
+#   docker-compose run zeus-scanner -b http://testphp.vulnweb.com -x --batch
+#
+# View logs:
+#   docker-compose logs zeus-scanner
+#
+# Clean up:
+#   docker-compose down -v
