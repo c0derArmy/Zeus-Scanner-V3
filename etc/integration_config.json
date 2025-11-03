@@ -1,0 +1,83 @@
+{
+  "assessment_config": {
+    "enable_exploitation": false,
+    "max_threads": 10,
+    "scan_depth": 5,
+    "timeout_seconds": 300,
+    "crawl_delay": 1.0,
+    "include_ajax_spider": true,
+    "enable_passive_scanning": true
+  },
+  "zap_config": {
+    "host": "127.0.0.1",
+    "port": 8080,
+    "api_key": "",
+    "scan_policy": "Default Policy",
+    "spider_max_depth": 5,
+    "ajax_spider_enabled": true,
+    "passive_scan_enabled": true
+  },
+  "burp_config": {
+    "host": "127.0.0.1", 
+    "port": 1337,
+    "api_key": "",
+    "project_file": "/tmp/zeus_burp_project.burp",
+    "scan_configurations": [
+      {
+        "name": "Audit checks - all except time-based detection methods",
+        "type": "NamedConfiguration"
+      }
+    ],
+    "crawl_optimization": {
+      "skip_non_text_responses": true,
+      "maximum_crawl_duration": 60,
+      "maximum_unique_responses": 1000
+    }
+  },
+  "metasploit_config": {
+    "host": "127.0.0.1",
+    "port": 55553,
+    "username": "msf",
+    "password": "msf",
+    "workspace": "zeus_assessment",
+    "auto_exploit": false,
+    "payload_type": "generic/shell_reverse_tcp",
+    "lhost": "127.0.0.1",
+    "lport": 4444
+  },
+  "ai_config": {
+    "industry": "general",
+    "compliance_frameworks": ["OWASP_TOP_10", "NIST"],
+    "risk_tolerance": "medium",
+    "generate_templates": true,
+    "autonomous_mode": false,
+    "cve_detection": true,
+    "poc_generation": true,
+    "risk_assessment": true,
+    "template_validation": true
+  },
+  "reporting_config": {
+    "generate_html_report": true,
+    "generate_json_report": true,
+    "generate_xml_report": false,
+    "include_screenshots": true,
+    "include_poc_code": true,
+    "executive_summary": true,
+    "technical_details": true,
+    "remediation_guidance": true
+  },
+  "network_config": {
+    "proxy": null,
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
+    "timeout": 30,
+    "retries": 3,
+    "verify_ssl": true,
+    "follow_redirects": true
+  },
+  "target_config": {
+    "exclude_extensions": [".jpg", ".png", ".gif", ".css", ".js", ".ico"],
+    "include_subdomains": false,
+    "max_urls_per_domain": 1000,
+    "skip_out_of_scope": true
+  }
+}
